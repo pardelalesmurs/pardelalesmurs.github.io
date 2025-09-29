@@ -233,7 +233,7 @@
         });
       }
 
-     /* === Render NOTES (carrousel) === */
+   /* === Render NOTES (carrousel) === */
 function renderNotes(){
   const rail = document.getElementById('notesScroller');
   rail.innerHTML = '';
@@ -279,17 +279,6 @@ function renderNotes(){
   });
 }
 
-    // Effet hover : zoom léger de l’image
-    card.addEventListener('mouseenter', () => {
-      card.querySelector('img').style.transform = 'scale(1.05)';
-    });
-    card.addEventListener('mouseleave', () => {
-      card.querySelector('img').style.transform = 'scale(1)';
-    });
-
-    rail.appendChild(card);
-  });
-}
       /* === Render FAVORITES === */
       function renderFavorites(){
         const rail = document.getElementById('favScroller');
