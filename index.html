@@ -55,6 +55,9 @@
         <img src="logo.svg" alt="Au-delà des murs logo" />
         <span>Par-delà des murs</span>
       </div>
+      <input id="search" type="search" placeholder="Rechercher une review…" aria-label="Recherche"
+       style="border:1px solid #eaeaea;border-radius:6px;padding:.4rem .6rem;max-width:260px;width:100%;
+              background:#fff;color:#1a1a1a;margin-right:.75rem;">
       <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -64,44 +67,222 @@
         <a href="about.html">À propos</a>
       </nav>
     </header>
-    <main class="container" id="postsContainer">
-      <!-- Les posts seront injectés ici par JS -->
-    </main>
+ <main>
+
+  <!-- SECTION 1 : REVIEWS (6 dernières) -->
+  <section id="reviews" class="container">
+    <h2 style="font-size:2rem;margin-bottom:1rem;border-bottom:1px solid #eaeaea;padding-bottom:.5rem">
+      Reviews
+      <small id="searchCount" style="font-size:.95rem;color:var(--clr-muted);font-weight:400;margin-left:.5rem"></small>
+    </h2>
+    <div id="reviewsGrid" style="display:grid;gap:1.25rem;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));">
+      <!-- cartes injectées -->
+    </div>
+  </section>
+
+  <!-- SECTION 2 : 10 DERNIÈRES NOTES (carrousel horizontal) -->
+  <section id="notes" class="container" style="margin-top:2rem">
+    <h2 style="font-size:1.5rem;margin-bottom:1rem;border-bottom:1px solid #eaeaea;padding-bottom:.5rem">
+      Les 10 dernières notes
+    </h2>
+
+    <div style="position:relative">
+      <button class="scrollLeftNotes" aria-label="Précédent"
+        style="position:absolute;left:-6px;top:42%;transform:translateY(-50%);border:none;background:#fff;border:1px solid #eaeaea;border-radius:50%;width:36px;height:36px;cursor:pointer">‹</button>
+      <div id="notesScroller"
+           style="display:grid;grid-auto-flow:column;grid-auto-columns:minmax(280px, 48vw);gap:1rem;overflow-x:auto;padding-bottom:.5rem;scroll-snap-type:x mandatory;">
+        <!-- cartes injectées -->
+      </div>
+      <button class="scrollRightNotes" aria-label="Suivant"
+        style="position:absolute;right:-6px;top:42%;transform:translateY(-50%);border:none;background:#fff;border:1px solid #eaeaea;border-radius:50%;width:36px;height:36px;cursor:pointer">›</button>
+    </div>
+  </section>
+
+  <!-- SECTION 3 : FILMS PRÉFÉRÉS (carrousel illimité) -->
+  <section id="favorites" class="container" style="margin-top:2rem">
+    <h2 style="font-size:1.5rem;margin-bottom:1rem;border-bottom:1px solid #eaeaea;padding-bottom:.5rem">
+      Mes films préférés
+    </h2>
+
+    <div style="position:relative">
+      <button class="scrollLeftFav" aria-label="Précédent"
+        style="position:absolute;left:-6px;top:42%;transform:translateY(-50%);border:none;background:#fff;border:1px solid #eaeaea;border-radius:50%;width:36px;height:36px;cursor:pointer">‹</button>
+      <div id="favScroller"
+           style="display:grid;grid-auto-flow:column;grid-auto-columns:minmax(160px, 220px);gap:1rem;overflow-x:auto;padding-bottom:.5rem;scroll-snap-type:x mandatory;">
+        <!-- posters injectés -->
+      </div>
+      <button class="scrollRightFav" aria-label="Suivant"
+        style="position:absolute;right:-6px;top:42%;transform:translateY(-50%);border:none;background:#fff;border:1px solid #eaeaea;border-radius:50%;width:36px;height:36px;cursor:pointer">›</button>
+    </div>
+  </section>
+
+</main>
     <footer>
       © <span id="year"></span> Par-delà des murs – Tous droits réservés.
     </footer>
     <script>
-      const burger = document.getElementById('burger');
-      const navLinks = document.getElementById('navLinks');
-      burger.addEventListener('click', () => {
-        const open = burger.classList.toggle('active');
-        navLinks.classList.toggle('open');
-        burger.setAttribute('aria-expanded', open);
-      });
-      const posts = [
-        {
-          title: 'The Art of Connection',
-          date: '2025-05-20',
-          image: 'assets/example.jpg',
-          excerpt: 'Bienvenue sur WordPress! (exemple)…',
-          url: 'posts/the-art-of-connection.html'
-        }
-      ];
-      posts.sort((a,b)=> new Date(b.date)-new Date(a.date));
-      const container = document.getElementById('postsContainer');
-      posts.forEach(post=>{
-        const article = document.createElement('article');
-        article.className='post-card';
-        article.innerHTML=`
-          <img src="${post.image}" alt="${post.title}">
-          <h2>${post.title}</h2>
-          <p class="meta">${new Date(post.date).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'})}</p>
-          <p class="excerpt">${post.excerpt}</p>
-          <a href="${post.url}" class="btn-read">Lire l’article</a>
-        `;
-        container.appendChild(article);
-      });
-      document.getElementById('year').textContent = new Date().getFullYear();
-    </script>
+  /* === Burger (inchangé) === */
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => {
+    const open = burger.classList.toggle('active');
+    navLinks.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open);
+  });
+
+  /* === Données d'exemple (remplace par les tiennes) === */
+  // REVIEWS (affichées en grille, on en montre 6 par défaut – triées du + récent au + ancien)
+  const reviews = [
+    {
+      title: 'Rembrandt',
+      date: '2025-09-24',
+      image: 'assets/rembrandt.jpg',
+      excerpt: 'Note rapide sur le film Rembrandt…',
+      url: 'posts/rembrandt.html',
+      tags: ['review','cinéma français']
+    },
+    {
+      title: 'Anatomie d’une chute',
+      date: '2025-09-23',
+      image: 'assets/anatomie.jpg',
+      excerpt: 'Retour critique sur la Palme…',
+      url: 'posts/anatomie.html',
+      tags: ['review','palme']
+    },
+    {
+      title: 'Benedetta',
+      date: '2025-09-22',
+      image: 'assets/benedetta.jpg',
+      excerpt: 'Quelques lignes sur Benedetta…',
+      url: 'posts/benedetta.html',
+      tags: ['review','verhoeven']
+    }
+    // …ajoute autant d’entrées que tu veux
+  ];
+
+  // NOTES (dernieres 10, carrousel)
+  const notes = [
+    { title:'Benedetta',      stars:3,   image:'assets/benedetta.jpg', url:'posts/benedetta.html',    date:'2025-09-22' },
+    { title:'Rembrandt',      stars:2.5, image:'assets/rembrandt.jpg', url:'posts/rembrandt.html',    date:'2025-09-24' },
+    { title:'Anatomie…',      stars:3,   image:'assets/anatomie.jpg',  url:'posts/anatomie.html',     date:'2025-09-23' }
+    // …jusqu’à 10 max; les plus récentes d’abord
+  ];
+
+  // FAVORIS (illimité)
+  const favorites = [
+    { title:'Tokyo Story',          image:'assets/tokyo-story.jpg',  url:'#' },
+    { title:'Perfect Days',         image:'assets/perfect-days.jpg', url:'#' },
+    { title:'Le vent se lève',      image:'assets/vent-se-leve.jpg', url:'#' },
+    { title:'Pierrot le Fou',       image:'assets/pierrot.jpg',      url:'#' },
+    { title:'Le tombeau des lucioles', image:'assets/grave-fireflies.jpg', url:'#' }
+    // …ajoute-en autant que tu veux
+  ];
+
+  /* === Helpers === */
+  const fmtDate = d => new Date(d).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'});
+  const makeStars = n => {
+    // n peut être .5 près (ex: 3.5)
+    const full = Math.floor(n), half = (n % 1) >= 0.5 ? 1 : 0, empty = 5 - full - half;
+    return '★'.repeat(full) + (half ? '☆'.slice(0,0)+'⯪' : '') + '☆'.repeat(empty);
+  };
+
+  /* === Render REVIEWS === */
+  function renderReviews(list){
+    const grid = document.getElementById('reviewsGrid');
+    grid.innerHTML = '';
+    // tri récent -> ancien
+    const data = [...list].sort((a,b)=> new Date(b.date)-new Date(a.date)).slice(0,6);
+    data.forEach(p=>{
+      const card = document.createElement('article');
+      card.className = 'post-card';
+      card.innerHTML = `
+        <img src="${p.image}" alt="${p.title}" style="width:100%;height:auto;border-radius:6px;">
+        <h3 style="font-size:1.15rem;margin:.75rem 0 .25rem">${p.title}</h3>
+        <p class="meta" style="color:var(--clr-muted);font-size:.9rem;margin-bottom:.4rem">${fmtDate(p.date)}</p>
+        <p class="excerpt" style="margin-bottom:.6rem">${p.excerpt ?? ''}</p>
+        <a href="${p.url}" class="btn-read" style="display:inline-block;padding:.5rem .9rem;background:var(--clr-accent);color:#fff;border-radius:6px;text-decoration:none;font-size:.9rem">Lire</a>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  /* === Render NOTES (carrousel) === */
+  function renderNotes(){
+    const rail = document.getElementById('notesScroller');
+    rail.innerHTML = '';
+    const data = [...notes].sort((a,b)=> new Date(b.date)-new Date(a.date)).slice(0,10);
+    data.forEach(n=>{
+      const card = document.createElement('a');
+      card.href = n.url;
+      card.style.cssText = 'scroll-snap-align:start;display:block;border:1px solid #eaeaea;border-radius:6px;overflow:hidden;background:#fff;text-decoration:none;color:inherit';
+      card.innerHTML = `
+        <div style="aspect-ratio:16/9;background:#f4f4f4">
+          <img src="${n.image}" alt="${n.title}" style="width:100%;height:100%;object-fit:cover;display:block">
+        </div>
+        <div style="padding:.75rem 1rem">
+          <h3 style="margin:0 0 .25rem;font-size:1.1rem">${n.title}</h3>
+          <div style="color:#333;font-variant-numeric:tabular-nums">${makeStars(n.stars)}</div>
+          <div style="color:var(--clr-muted);font-size:.9rem;margin-top:.25rem">${fmtDate(n.date)}</div>
+        </div>
+      `;
+      rail.appendChild(card);
+    });
+  }
+
+  /* === Render FAVORITES (carrousel illimité) === */
+  function renderFavorites(){
+    const rail = document.getElementById('favScroller');
+    rail.innerHTML = '';
+    favorites.forEach(f=>{
+      const card = document.createElement('a');
+      card.href = f.url;
+      card.title = f.title;
+      card.style.cssText = 'scroll-snap-align:start;display:block;border-radius:6px;overflow:hidden;border:1px solid #eaeaea;background:#fff';
+      card.innerHTML = `
+        <div style="aspect-ratio:2/3;background:#f5f5f5">
+          <img src="${f.image}" alt="${f.title}" style="width:100%;height:100%;object-fit:cover;display:block">
+        </div>
+        <div style="padding:.5rem .6rem;color:#333;font-size:.95rem">${f.title}</div>
+      `;
+      rail.appendChild(card);
+    });
+  }
+
+  /* === Recherche (filtre les REVIEWS) === */
+  const searchInput = document.getElementById('search');
+  const searchCount = document.getElementById('searchCount');
+  function applySearch(){
+    const q = (searchInput.value || '').trim().toLowerCase();
+    if(!q){ searchCount.textContent=''; return renderReviews(reviews); }
+    const filtered = reviews.filter(p => {
+      const hay = [p.title, p.excerpt, ...(p.tags||[])].join(' ').toLowerCase();
+      return hay.includes(q);
+    });
+    searchCount.textContent = `— ${filtered.length} résultat(s)`;
+    renderReviews(filtered);
+  }
+  if(searchInput){
+    searchInput.addEventListener('input', applySearch);
+  }
+
+  /* === Boutons de scroll des carrousels === */
+  function wireScrollers(){
+    const nRail = document.getElementById('notesScroller');
+    const fRail = document.getElementById('favScroller');
+    document.querySelector('.scrollLeftNotes') .addEventListener('click', ()=> nRail.scrollBy({left: -nRail.clientWidth*0.9, behavior:'smooth'}));
+    document.querySelector('.scrollRightNotes').addEventListener('click', ()=> nRail.scrollBy({left:  nRail.clientWidth*0.9, behavior:'smooth'}));
+    document.querySelector('.scrollLeftFav')   .addEventListener('click', ()=> fRail.scrollBy({left: -fRail.clientWidth*0.9, behavior:'smooth'}));
+    document.querySelector('.scrollRightFav')  .addEventListener('click', ()=> fRail.scrollBy({left:  fRail.clientWidth*0.9, behavior:'smooth'}));
+  }
+
+  /* === Boot === */
+  reviews.sort((a,b)=> new Date(b.date)-new Date(a.date));
+  renderReviews(reviews);
+  renderNotes();
+  renderFavorites();
+  wireScrollers();
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
   </body>
 </html>
