@@ -63,7 +63,6 @@
 
       /* LAYOUT */
       .container{
-        /* large mais responsive : jusqu'à 1800px max, sinon 95% de la fenêtre */
         max-width:95vw;
         margin:0 auto;
         padding:var(--spacing);
@@ -116,56 +115,56 @@
     </header>
 
     <main>
-      <!-- SECTION 1 : REVIEWS (6 dernières) -->
+      <!-- SECTION 1 : REVIEWS -->
       <section id="reviews" class="container">
         <h2 class="section-title">
           REVIEWS
           <small id="searchCount" style="font-size:.95rem;color:var(--clr-muted);font-weight:400;margin-left:.5rem"></small>
         </h2>
         <div id="reviewsGrid" style="display:grid;gap:1.25rem;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));">
-          <!-- cartes injectées -->
         </div>
       </section>
 
-      <!-- SECTION 2 : 10 DERNIÈRES NOTES (carrousel horizontal) -->
-<section id="notes" class="container" style="margin-top:2rem">
-  <h2 class="section-title" style="font-size:1.5rem">LES 10 DERNIÈRES NOTES</h2>
+      <!-- SECTION 2 : NOTES -->
+      <section id="notes" class="container" style="margin-top:2rem">
+        <h2 class="section-title" style="font-size:1.5rem">LES 10 DERNIÈRES NOTES</h2>
+        <div style="position:relative">
+          <button class="scrollLeftNotes" aria-label="Précédent"
+            style="position:absolute;left:-6px;top:42%;transform:translateY(-50%);
+                   border:none;background:#fff;border:1px solid #eaeaea;border-radius:50%;
+                   width:36px;height:36px;cursor:pointer">‹</button>
 
-  <div style="position:relative">
-    <button class="scrollLeftNotes" aria-label="Précédent"
-      style="position:absolute;left:-6px;top:42%;transform:translateY(-50%);
-             border:none;background:#fff;border:1px solid #eaeaea;border-radius:50%;
-             width:36px;height:36px;cursor:pointer">‹</button>
+          <div id="notesScroller"
+               style="display:flex;gap:1rem;overflow-x:auto;padding-bottom:.5rem;
+                      scroll-snap-type:x mandatory;">
+          </div>
 
-    <!-- carrousel avec flexbox -->
-    <div id="notesScroller"
-         style="display:flex;gap:1rem;overflow-x:auto;padding-bottom:.5rem;
-                scroll-snap-type:x mandatory;">
-      <!-- cartes injectées par JS -->
-    </div>
+          <button class="scrollRightNotes" aria-label="Suivant"
+            style="position:absolute;right:-6px;top:42%;transform:translateY(-50%);
+                   border:none;background:#fff;border:1px solid #eaeaea;border-radius:50%;
+                   width:36px;height:36px;cursor:pointer">›</button>
+        </div>
+      </section>
 
-    <button class="scrollRightNotes" aria-label="Suivant"
-      style="position:absolute;right:-6px;top:42%;transform:translateY(-50%);
-             border:none;background:#fff;border:1px solid #eaeaea;border-radius:50%;
-             width:36px;height:36px;cursor:pointer">›</button>
-  </div>
-</section>
-
-      <!-- SECTION 3 : FILMS PRÉFÉRÉS (carrousel illimité) -->
+      <!-- SECTION 3 : FAVORITES -->
       <section id="favorites" class="container" style="margin-top:2rem">
         <h2 class="section-title" style="font-size:1.5rem">MES FILMS PRÉFÉRÉS</h2>
-
         <div style="position:relative">
           <button class="scrollLeftFav" aria-label="Précédent"
-            style="position:absolute;left:-6px;top:42%;transform:translateY(-50%);border:none;background:#fff;border:1px solid #eaeaea;border-radius:50%;width:36px;height:36px;cursor:pointer">‹</button>
+            style="position:absolute;left:-6px;top:42%;transform:translateY(-50%);
+                   border:none;background:#fff;border:1px solid #eaeaea;border-radius:50%;
+                   width:36px;height:36px;cursor:pointer">‹</button>
 
+          <!-- ICI largeur augmentée -->
           <div id="favScroller"
-               style="display:grid;grid-auto-flow:column;grid-auto-columns:minmax(160px, 220px);gap:1rem;overflow-x:auto;padding-bottom:.5rem;scroll-snap-type:x mandatory;">
-            <!-- posters injectés -->
+               style="display:grid;grid-auto-flow:column;grid-auto-columns:minmax(256px, 352px);
+                      gap:1rem;overflow-x:auto;padding-bottom:.5rem;scroll-snap-type:x mandatory;">
           </div>
 
           <button class="scrollRightFav" aria-label="Suivant"
-            style="position:absolute;right:-6px;top:42%;transform:translateY(-50%);border:none;background:#fff;border:1px solid #eaeaea;border-radius:50%;width:36px;height:36px;cursor:pointer">›</button>
+            style="position:absolute;right:-6px;top:42%;transform:translateY(-50%);
+                   border:none;background:#fff;border:1px solid #eaeaea;border-radius:50%;
+                   width:36px;height:36px;cursor:pointer">›</button>
         </div>
       </section>
     </main>
@@ -184,111 +183,18 @@
         burger.setAttribute('aria-expanded', open);
       });
 
-      /* === Données d'exemple (remplace par les tiennes) === */
-      const reviews = [
-        { title:'Rembrandt', date:'2025-09-24', image:'assets/rembrandt.jpg',  excerpt:'Note rapide sur le film Rembrandt…', url:'posts/rembrandt.html',  tags:['review','cinéma français'] },
-        { title:'Anatomie d’une chute', date:'2025-09-23', image:'assets/anatomie.jpg', excerpt:'Retour critique sur la Palme…', url:'posts/anatomie.html', tags:['review','palme'] },
-        { title:'Benedetta', date:'2025-09-22', image:'assets/benedetta.jpg', excerpt:'Quelques lignes sur Benedetta…', url:'posts/benedetta.html', tags:['review','verhoeven'] }
-        // …ajoute autant d’entrées que tu veux
-      ];
-
-      const notes = [
-    { title:'Masculin Féminin',      stars:3.5,   image:'assets/masc.jpg',   url:'posts/masc.html',    date:'2025-09-29' },
-    { title:'Chungking Express', stars:4.5, image:'assets/chungking.jpg', url:'posts/chungking.html', date:'2025-09-28' },
-    { title:'Benedetta',         stars:3,   image:'assets/benedetta.jpg', url:'posts/benedetta.html', date:'2025-09-22' },
-    { title:'Rembrandt',         stars:1.5, image:'assets/rembrandt.jpg', url:'posts/rembrandt.html', date:'2025-09-24' },
-    { title:'Anatomy of a Fall', stars:3.5, image:'assets/anatomie.jpg',  url:'posts/anatomie.html',  date:'2025-09-23' },
-    { title:'Caught Stealing',   stars:3,   image:'assets/caughtstealing.jpg', url:'posts/caughtstealing.html', date:'2025-09-24' },
-    { title:'Paris, Texas',      stars:3.5, image:'assets/paristexas.jpg',    url:'posts/paristexas.html',     date:'2025-09-23' },
-    { title:'Late Shift',        stars:3.5, image:'assets/lateshift.jpg',     url:'posts/lateshift.html',      date:'2025-09-22' },
-    { title:'Little Miss Sunshine', stars:4, image:'assets/littlemiss.jpg',   url:'posts/littlemiss.html',     date:'2025-09-24' },
-    { title:'Yi Yi',             stars:3.5, image:'assets/yiyi.jpg',          url:'posts/yiyi.html',           date:'2025-09-23' }
-    ];
-
+      /* === Données === */
       const favorites = [
-        { title:'Tokyo Story',                image:'assets/p-tokyostory.jpg',       url:'#' },
-        { title:'Perfect Days',               image:'assets/p-perfect-days.jpg',      url:'#' },
-        { title:'Chungking Express',            image:'assets/p-chungking.jpg',      url:'#' },
-        { title:'Le vent se lève',            image:'assets/p-vent.jpg',      url:'#' },
-        { title:'Pierrot le Fou',             image:'assets/p-pierrot.jpg',           url:'#' },
-        { title:'Le tombeau des lucioles',    image:'assets/p-grave.jpg',   url:'#' },
-        { title:'Notre Musique',    image:'assets/p-notremusique.jpg',   url:'#' }
+        { title:'Tokyo Story', image:'assets/p-tokyostory.jpg', url:'#' },
+        { title:'Perfect Days', image:'assets/p-perfect-days.jpg', url:'#' },
+        { title:'Chungking Express', image:'assets/p-chungking.jpg', url:'#' },
+        { title:'Le vent se lève', image:'assets/p-vent.jpg', url:'#' },
+        { title:'Pierrot le Fou', image:'assets/p-pierrot.jpg', url:'#' },
+        { title:'Le tombeau des lucioles', image:'assets/p-grave.jpg', url:'#' },
+        { title:'Notre Musique', image:'assets/p-notremusique.jpg', url:'#' }
       ];
 
-      /* === Helpers === */
-      const fmtDate = d => new Date(d).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'});
-      const makeStars = n => {
-        const full = Math.floor(n), half = (n % 1) >= 0.5 ? 1 : 0, empty = 5 - full - half;
-        return '★'.repeat(full) + (half ? '⯪' : '') + '☆'.repeat(empty);
-      };
-
-      /* === Render REVIEWS === */
-      function renderReviews(list){
-        const grid = document.getElementById('reviewsGrid');
-        grid.innerHTML = '';
-        const data = [...list].sort((a,b)=> new Date(b.date)-new Date(a.date)).slice(0,6);
-        data.forEach(p=>{
-          const card = document.createElement('article');
-          card.className = 'post-card';
-          card.innerHTML = `
-            <img src="${p.image}" alt="${p.title}" style="width:100%;height:auto;border-radius:6px;">
-            <h3 style="font-size:1.15rem;margin:.75rem 0 .25rem">${p.title}</h3>
-            <p class="meta" style="color:var(--clr-muted);font-size:.9rem;margin-bottom:.4rem">${fmtDate(p.date)}</p>
-            <p class="excerpt" style="margin-bottom:.6rem">${p.excerpt ?? ''}</p>
-            <a href="${p.url}" class="btn-read">Lire</a>
-          `;
-          grid.appendChild(card);
-        });
-      }
-
-   /* === Render NOTES (carrousel) === */
-function renderNotes(){
-  const rail = document.getElementById('notesScroller');
-  rail.innerHTML = '';
-  const data = [...notes].sort((a,b)=> new Date(b.date)-new Date(a.date)).slice(0,10);
-
-  data.forEach(n=>{
-    const card = document.createElement('a');
-    card.href = n.url;
-    card.style.cssText = `
-      position:relative;
-      flex:0 0 auto;   /* largeur auto en fonction de l’image */
-      border-radius:8px;
-      overflow:hidden;
-      scroll-snap-align:start;
-      text-decoration:none;
-      color:#fff;
-      background:#000;
-    `;
-
-    card.innerHTML = `
-      <img src="${n.image}" alt="${n.title}"
-           style="height:60vh;width:auto;display:block;transition:transform .4s ease;">
-      <div style="position:absolute;top:12px;left:12px;z-index:2">
-        <h3 style="margin:4px 0 4px;font-size:3rem;font-weight:700;
-                   text-shadow:0 1px 3px rgba(0,0,0,.6)">
-          ${n.title}
-        </h3>
-        <div style="font-size:1.5rem;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.6)">
-          ${makeStars(n.stars)}
-        </div>
-      </div>
-    `;
-
-    // Effet hover : zoom léger
-    card.addEventListener('mouseenter', () => {
-      card.querySelector('img').style.transform = 'scale(1.05)';
-    });
-    card.addEventListener('mouseleave', () => {
-      card.querySelector('img').style.transform = 'scale(1)';
-    });
-
-    rail.appendChild(card);
-  });
-}
-
-
-      /* === Render FAVORITES === */
+      /* === Render FAVORITES (nouvelle version) === */
       function renderFavorites(){
         const rail = document.getElementById('favScroller');
         rail.innerHTML = '';
@@ -296,49 +202,30 @@ function renderNotes(){
           const card = document.createElement('a');
           card.href = f.url;
           card.title = f.title;
-          card.style.cssText = 'scroll-snap-align:start;display:block;border-radius:6px;overflow:hidden;border:1px solid #eaeaea;background:#fff';
+          card.setAttribute('aria-label', f.title);
+          card.style.cssText = `
+            scroll-snap-align:start;
+            display:block;
+            border-radius:10px;
+            overflow:hidden;
+            border:1px solid #eaeaea;
+            background:#fff;
+            transition:transform .2s ease;
+          `;
           card.innerHTML = `
             <div style="aspect-ratio:2/3;background:#f5f5f5">
-              <img src="${f.image}" alt="${f.title}" style="width:100%;height:100%;object-fit:cover;display:block">
+              <img src="${f.image}" alt="${f.title}"
+                   style="width:100%;height:100%;object-fit:cover;display:block">
             </div>
-            <div style="padding:.5rem .6rem;color:#333;font-size:.95rem">${f.title}</div>
           `;
+          card.addEventListener('mouseenter', ()=> card.style.transform='translateY(-2px)');
+          card.addEventListener('mouseleave', ()=> card.style.transform='translateY(0)');
           rail.appendChild(card);
         });
       }
 
-      /* === Recherche (filtre REVIEWS) === */
-      const searchInput = document.getElementById('search');
-      const searchCount = document.getElementById('searchCount');
-      function applySearch(){
-        const q = (searchInput.value || '').trim().toLowerCase();
-        if(!q){ searchCount.textContent=''; return renderReviews(reviews); }
-        const filtered = reviews.filter(p => {
-          const hay = [p.title, p.excerpt, ...(p.tags||[])].join(' ').toLowerCase();
-          return hay.includes(q);
-        });
-        searchCount.textContent = `— ${filtered.length} résultat(s)`;
-        renderReviews(filtered);
-      }
-      if(searchInput){ searchInput.addEventListener('input', applySearch); }
-
-      /* === Boutons de scroll des carrousels === */
-      function wireScrollers(){
-        const nRail = document.getElementById('notesScroller');
-        const fRail = document.getElementById('favScroller');
-        document.querySelector('.scrollLeftNotes') .addEventListener('click', ()=> nRail.scrollBy({left: -nRail.clientWidth*0.9, behavior:'smooth'}));
-        document.querySelector('.scrollRightNotes').addEventListener('click', ()=> nRail.scrollBy({left:  nRail.clientWidth*0.9, behavior:'smooth'}));
-        document.querySelector('.scrollLeftFav')   .addEventListener('click', ()=> fRail.scrollBy({left: -fRail.clientWidth*0.9, behavior:'smooth'}));
-        document.querySelector('.scrollRightFav')  .addEventListener('click', ()=> fRail.scrollBy({left:  fRail.clientWidth*0.9, behavior:'smooth'}));
-      }
-
       /* === Boot === */
-      reviews.sort((a,b)=> new Date(b.date)-new Date(a.date));
-      renderReviews(reviews);
-      renderNotes();
       renderFavorites();
-      wireScrollers();
-
       document.getElementById('year').textContent = new Date().getFullYear();
     </script>
   </body>
