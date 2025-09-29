@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Par-delà des murs</title>
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <!-- Police Google : Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+      /* RESET & VARIABLES */
+      *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+      :root{
+        --clr-bg:#fff;
+        --clr-text:#1a1a1a;
+        --clr-muted:#666;
+        --clr-accent:#08203e;
+        --spacing:2rem;
+        font-family:'Inter',sans-serif;
+        line-height:1.5;
+      }
+      body{background:var(--clr-bg);color:var(--clr-text);}
+      /* NAVBAR */
+      .navbar{display:flex;align-items:center;justify-content:space-between;padding:1rem var(--spacing);position:sticky;top:0;background:var(--clr-bg);border-bottom:1px solid #eaeaea;z-index:1000;}
+      .logo{display:flex;align-items:center;gap:.75rem;font-weight:700;font-size:1.15rem;text-transform:uppercase;letter-spacing:.02em;}
+      .logo img{width:40px;height:40px;}
+      .burger{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:0;width:32px;height:32px;z-index:1100;}
+      .burger span{display:block;width:100%;height:3px;background:var(--clr-text);transition:.3s;}
+      .burger.active span:nth-child(1){transform:translateY(9px) rotate(45deg);} 
+      .burger.active span:nth-child(2){opacity:0;} 
+      .burger.active span:nth-child(3){transform:translateY(-9px) rotate(-45deg);} 
+      .nav-links{position:fixed;top:0;right:0;bottom:0;width:70%;max-width:300px;background:var(--clr-bg);padding:5rem 2rem;display:flex;flex-direction:column;gap:1.5rem;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,.0,.2,1);}
+      .nav-links.open{transform:translateX(0);}      
+      .nav-links a{color:var(--clr-text);text-decoration:none;font-weight:500;font-size:1rem;}
+      .nav-links a:hover{color:var(--clr-accent);}      
+      /* BLOG LIST */
+      .container{max-width:800px;margin:0 auto;padding:var(--spacing);} 
+      .post-card{margin-bottom:var(--spacing);} 
+      .post-card img{width:100%;height:auto;border-radius:4px;} 
+      .post-card h2{font-size:1.75rem;margin:1rem 0 .5rem;} 
+      .post-card p.meta{color:var(--clr-muted);font-size:.9rem;margin-bottom:.75rem;} 
+      .post-card p.excerpt{margin-bottom:.75rem;} 
+      .btn-read{display:inline-block;padding:.5rem 1rem;background:var(--clr-accent);color:#fff;border-radius:4px;text-decoration:none;font-size:.9rem;} 
+      /* FOOTER */
+      footer{border-top:1px solid #eaeaea;padding:1.5rem var(--spacing);font-size:.85rem;color:var(--clr-muted);text-align:center;margin-top:3rem;} 
+    </style>
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="logo">
+        <img src="logo.svg" alt="Au-delà des murs logo" />
+        <span>Par-delà des murs</span>
+      </div>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html">Blog</a>
+        <a href="projets.html">Projets</a>
+        <a href="about.html">À propos</a>
+      </nav>
+    </header>
+    <main class="container" id="postsContainer">
+      <!-- Les posts seront injectés ici par JS -->
+    </main>
+    <footer>
+      © <span id="year"></span> Par-delà des murs – Tous droits réservés.
+    </footer>
+    <script>
+      const burger = document.getElementById('burger');
+      const navLinks = document.getElementById('navLinks');
+      burger.addEventListener('click', () => {
+        const open = burger.classList.toggle('active');
+        navLinks.classList.toggle('open');
+        burger.setAttribute('aria-expanded', open);
+      });
+      const posts = [
+        {
+          title: 'The Art of Connection',
+          date: '2025-05-20',
+          image: 'assets/example.jpg',
+          excerpt: 'Bienvenue sur WordPress! (exemple)…',
+          url: 'posts/the-art-of-connection.html'
+        }
+      ];
+      posts.sort((a,b)=> new Date(b.date)-new Date(a.date));
+      const container = document.getElementById('postsContainer');
+      posts.forEach(post=>{
+        const article = document.createElement('article');
+        article.className='post-card';
+        article.innerHTML=`
+          <img src="${post.image}" alt="${post.title}">
+          <h2>${post.title}</h2>
+          <p class="meta">${new Date(post.date).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'})}</p>
+          <p class="excerpt">${post.excerpt}</p>
+          <a href="${post.url}" class="btn-read">Lire l’article</a>
+        `;
+        container.appendChild(article);
+      });
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
