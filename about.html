@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>À propos — Par-delà des murs</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* RESET & VARIABLES */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --clr-bg:#fff;
+      --clr-text:#1a1a1a;
+      --clr-muted:#666;
+      --clr-primary-light:#8ECAE6;
+      --clr-primary:#219EBC;
+      --clr-primary-dark:#023047;
+      --spacing:2rem;
+      font-family:'Inter',sans-serif;
+      line-height:1.5;
+    }
+    body{background:var(--clr-bg);color:var(--clr-text);}
+
+    /* NAVBAR (même style que l’index) */
+    .navbar{display:flex;align-items:center;justify-content:space-between;padding:1rem var(--spacing);position:sticky;top:0;background:var(--clr-bg);border-bottom:1px solid #eaeaea;z-index:1000;}
+    .logo{display:flex;align-items:center;gap:.75rem;font-weight:700;font-size:1.15rem;text-transform:uppercase;letter-spacing:.02em;}
+    .logo img{width:40px;height:40px;}
+    .burger{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:0;width:32px;height:32px;z-index:1100;}
+    .burger span{display:block;width:100%;height:3px;background:var(--clr-text);transition:.3s;}
+    .burger.active span:nth-child(1){transform:translateY(9px) rotate(45deg);} 
+    .burger.active span:nth-child(2){opacity:0;} 
+    .burger.active span:nth-child(3){transform:translateY(-9px) rotate(-45deg);} 
+    .nav-links{position:fixed;top:0;right:0;bottom:0;width:70%;max-width:300px;background:var(--clr-bg);padding:5rem 2rem;display:flex;flex-direction:column;gap:1.5rem;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,.0,.2,1);}
+    .nav-links.open{transform:translateX(0);}      
+    .nav-links a{color:var(--clr-text);text-decoration:none;font-weight:500;font-size:1rem;}
+    .nav-links a:hover{color:var(--clr-primary-dark);}
+
+    /* LAYOUT GLOBAL */
+    .container{max-width:min(95vw, 1800px);margin:0 auto;padding:var(--spacing);}
+    .section-title{font-size:2rem;margin-bottom:1rem;border-bottom:1px solid #eaeaea;padding-bottom:.5rem;}
+
+    /* SECTION ABOUT */
+    .about-grid{
+      display:grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: clamp(1rem, 4vw, 4rem);
+      align-items:center;
+    }
+    .about-photo{
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,.06);
+    }
+    .about-photo img{
+      width:100%; height:auto; display:block;
+    }
+    .about-title{font-size:clamp(2rem, 4.5vw, 3.5rem);line-height:1.1;margin-bottom:.25rem;font-weight:800;}
+    .about-sub{font-size:clamp(1.1rem, 2vw, 1.5rem);color:#111;margin-bottom:1.25rem;font-weight:700;}
+    .about-text{color:var(--clr-text);opacity:.9;}
+    .about-text p{margin-bottom:1rem;}
+    .btn{
+      display:inline-block; margin-top:1rem;
+      padding:.7rem 1.1rem; border-radius:999px;
+      background:var(--clr-primary-dark); color:#fff; text-decoration:none; font-weight:600;
+      transition:transform .15s ease, background .2s ease;
+    }
+    .btn:hover{background:var(--clr-primary); transform:translateY(-1px);}
+    .socials{display:flex;gap:.5rem;margin-left:auto}
+    .chip{display:inline-flex;align-items:center;gap:.5rem;border:1px solid #e5e5e5;border-radius:999px;padding:.35rem .65rem;font-size:.9rem;text-decoration:none;color:var(--clr-text);}
+    .chip:hover{border-color:var(--clr-primary);}
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .about-grid{grid-template-columns: 1fr; align-items:start;}
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">
+      <img src="logo.svg" alt="Par-delà des murs logo" />
+      <span>Par-delà des murs</span>
+    </div>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Mon Blog</a>
+      <a href="about.html">À propos</a>
+      <a href="projets.html">Projets</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="container">
+      <h2 class="section-title">ABOUT ME</h2>
+
+      <div class="about-grid">
+        <!-- Photo à gauche -->
+        <div class="about-photo">
+          <!-- Remplace le chemin par ta photo -->
+          <img src="assets/portrait.jpg" alt="Portrait de Zakaria">
+        </div>
+
+        <!-- Texte à droite -->
+        <div>
+          <!-- Remplace le nom si besoin -->
+          <h1 class="about-title">Zakaria</h1>
+          <div class="about-sub">étudiant en géopolitique</div>
+
+          <div class="about-text">
+            <p>
+              Je suis étudiant en master de géopolitique à l’Université, mais avant tout,
+              je suis passionné de cinéma. J’aime autant découvrir des classiques que suivre
+              les dernières sorties, et surtout en parler : écrire une review, partager une impression,
+              ou défendre une idée qui me tient à cœur.
+            </p>
+            <p>
+              Ce blog est mon espace personnel pour rassembler mes reviews, mes réflexions et mes coups de cœur.
+              J’essaie d’aborder les films avec sincérité&nbsp;: parfois analytique, parfois plus subjectif,
+              mais toujours avec l’envie de transmettre ce que le cinéma me fait ressentir.
+            </p>
+            <p>
+              Je ne me limite pas aux critiques de films. Il m’arrive aussi d’écrire des courts essais,
+              sur le football, la culture ou la société, quand quelque chose mérite d’être dit.
+              Ici, je veux mêler mes passions et offrir un regard à la fois curieux, critique et engagé.
+              Bienvenue sur mon blog !
+            </p>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:.75rem;margin-top:.75rem">
+            <a class="btn" href="index.html">Mon Blog</a>
+            <!-- Social en option : mets ton URL ou supprime le chip -->
+            <a class="chip" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <!-- petit pictogramme simple -->
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6.94 8.5v9H3.88v-9h3.06Zm-.13-3.41a1.77 1.77 0 1 1-3.54 0 1.77 1.77 0 0 1 3.54 0ZM21 13.26v4.24h-3.06v-3.96c0-.99-.35-1.67-1.23-1.67-.67 0-1.06.45-1.24.88-.06.15-.08.36-.08.57v4.18h-3.06s.04-6.79 0-7.5H15v1.06c.41-.63 1.14-1.53 2.77-1.53 2.02 0 3.53 1.32 3.53 4.16Z" fill="#023047"/>
+              </svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer style="border-top:1px solid #eaeaea;padding:1.5rem var(--spacing);font-size:.85rem;color:var(--clr-muted);text-align:center;margin-top:3rem;">
+    © <span id="year"></span> Par-delà des murs – Tous droits réservés.
+  </footer>
+
+  <script>
+    // Burger
+    const burger = document.getElementById('burger');
+    const navLinks = document.getElementById('navLinks');
+    burger.addEventListener('click', () => {
+      const open = burger.classList.toggle('active');
+      navLinks.classList.toggle('open');
+      burger.setAttribute('aria-expanded', open);
+    });
+    // year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
