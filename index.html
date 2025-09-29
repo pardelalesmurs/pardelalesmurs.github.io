@@ -250,22 +250,34 @@ function renderNotes(){
       scroll-snap-align:start;
       text-decoration:none;
       color:#fff;
-      min-height:260px;
       background:#000;
     `;
 
-   card.innerHTML = `
-  <img src="${n.image}" alt="${n.title}"
-       style="width:100%;height:auto;display:block;transition:transform .4s ease;">
-  <div style="position:absolute;top:12px;left:12px;z-index:2">
-    <h3 style="margin:0 0 4px;font-size:1.25rem;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.6)">
-      ${n.title}
-    </h3>
-    <div style="font-size:1rem;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.6)">
-      ${makeStars(n.stars)}
-    </div>
-  </div>
-`;
+    card.innerHTML = `
+      <img src="${n.image}" alt="${n.title}"
+           style="width:100%;height:auto;display:block;transition:transform .4s ease;">
+      <div style="position:absolute;top:12px;left:12px;z-index:2">
+        <h3 style="margin:0 0 4px;font-size:1.25rem;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.6)">
+          ${n.title}
+        </h3>
+        <div style="font-size:1rem;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.6)">
+          ${makeStars(n.stars)}
+        </div>
+      </div>
+    `;
+
+    // Effet hover : zoom léger de l’image
+    const img = card.querySelector('img');
+    card.addEventListener('mouseenter', () => {
+      img.style.transform = 'scale(1.05)';
+    });
+    card.addEventListener('mouseleave', () => {
+      img.style.transform = 'scale(1)';
+    });
+
+    rail.appendChild(card);
+  });
+}
 
     // Effet hover : zoom léger de l’image
     card.addEventListener('mouseenter', () => {
